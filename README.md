@@ -1,58 +1,128 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<h3 align="center">LAPORAN PRAKTIKUM</h3>
+<h3 align="center">APLIKASI BERBASIS PLATFORM</h3>
+<h3 align="center">LARAVEL + AJAX</h3>
+
+<br>
+<p align="center">
+  <img src="screenshot/logo telkom university.png" width="150"/>
+</p>
+<br>
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+Disusun oleh:
+<br><br>
+D’SHARLENDITA FEBIANDA AURELIA  
+<br>
+2311102069  
+<br>
+S1 IF-11-04  
 </p>
 
-## About Laravel
+<br>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<p align="center">
+Dosen Pengampu:
+<br>
+Cahyo Prihantoro, S.Kom., M.Eng  
+</p>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<br><br>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+<p align="center">
+PROGRAM STUDI S1 INFORMATIKA  
+<br>
+FAKULTAS INFORMATIKA  
+<br>
+TELKOM UNIVERSITY PURWOKERTO  
+<br>
+2026  
+</p>
 
-## Learning Laravel
+## Struktur & Penjelasan Kode
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 1. Controller (`MahasiswaController.php`)
+- `index()` → menampilkan halaman utama  
+- `getData()` → membaca file JSON lalu mengirim sebagai response  
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Alur:
+- Ambil path file (`storage_path`)
+- Cek file (`file_exists`)
+- Baca file (`file_get_contents`)
+- Decode JSON (`json_decode`)
+- Return JSON (`response()->json`)
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+---
 
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+### 2. Routing (`web.php`)
+```php
+Route::get('/', [MahasiswaController::class, 'index']);
+Route::get('/get-mahasiswa', [MahasiswaController::class, 'getData']);
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+- / → halaman utama
+- /get-mahasiswa → API data mahasiswa
 
-## Contributing
+### 3. View (Blade / HTML)
+- Tombol trigger:
+  ```html
+  <button onclick="loadData()">Tampilkan Data</button>
+  ```
+- Output:
+  ```html
+  <div id="result"></div>
+  ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 4. JavaScript (app.js)
+Fungsi loadData():
 
-## Code of Conduct
+- Tampilkan loading
+- Fetch ke /get-mahasiswa
+- Convert JSON
+- Loop data (forEach)
+- Render ke HTML (card)
+- Handle error
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 5. CSS (style.css)
+- Glassmorphism UI
+- Animasi background
+- Card responsive + hover effect
 
-## Security Vulnerabilities
+### 6. Cara Install & Menjalankan
+1. Clone / Siapkan Project
+2. Tambahkan Data JSON
+   Simpan file di:
+   storage/app/data/mahasiswa.json
+   Contoh:
+   ```json
+   [
+      {
+        "nama": "Dita",
+        "nim": "2311102069",
+        "kelas": "IF1104",
+        "prodi": "Informatika"
+      }
+    ]
+   ```
+3. Jalankan server
+   ```bash
+   php artisan serve
+   ```
+   buka di browser:
+   http://127.0.0.1:8000
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 7. Cara Penggunaan
+1. Buka website
+2. Klik tombol Tampilkan Data
+3. Data mahasiswa akan muncul otomatis
+4. Jika file JSON tidak ada → muncul error
 
-## License
+### 8. Alur Sistem
+User klik tombol → JS fetch API → Controller baca JSON → kirim data → tampil di halaman
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 9. Screenshot Program
+Halaman Awal
+<img src="screenshot/Halaman Awal.png">
+---
+View Data
+<img src="screenshot/View Data.png">
+---
